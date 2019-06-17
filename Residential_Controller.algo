@@ -1,0 +1,194 @@
+
+Only one column  // (Floors 1 to 10) 
+
+elevator_list (Quantity 2)
+elevator1  
+elevator2 
+ 
+...
+PROPERTY :
+'elevator direction        // up, down
+'elevator currentFloor     // position
+'elevator status           // idle, moving, stoped
+'elevator queue            // a list ' GOES UP when Exemple [1,2,3,4...] or DOWN [6,5,4,3,...]
+'elevator doors            // closed or opened
+'elevator goodWay          // true or false 'Use to "FIND" the elevator going toward the request floor' ( To get the BEST elevator to choose)
+
+
+externButton_list 'EXTERNAL BUTTONS'
+PROPERTY:
+'requestFloor  
+'direction               // direction caller up or down
+
+
+innerlButton_list  'INTERNAL BUTTONS' (inside the elevator)
+PROPERTY:
+'requestFloor  
+'direction               // direction caller up or down
+
+
+   
+'---------------------   ADD TO and SORT elevatorQueue   ------------------------------'
+SEQUENCE Add_To_elevatorQueue USING elevator   AND  request_Floor 'Request_Floor For Inner and extern button
+   
+   ADD  request_Floor  TO  elevatorQueue
+   
+   'SORT SEULEMENT AU BESION SI DIRECTION EXIST'
+    IF elevator direction IS UP THEN 
+        SORT elevatorQueue ascending  '1,2,3
+   ENDIF
+    IF elevator direction IS DOWN THEN
+        SORT elevatorQueue descending '3,2,1
+    ENDIF
+
+ENDSEQUENCE
+
+
+'--------------------------------  MOVE  ---------------------------------------'
+SEQUENCE move_Elevator USING  elevator
+    'FIRST'
+    IF elevator door_opened IS TRUE THEN 
+      CALL close_Door() WITH elevator
+    END IF
+    
+    firstElement  IS  the first element of elevatorQueue '[1,2,3] or [10,9,8] 
+
+    IF firstElement  > elevator current floor THEN
+      CALL moveUp() WITH elevator
+    END IF
+
+    IF firstElement  < elevator current floor THEN
+      CALL moveDown() WITH Elevator
+    END IF
+
+END SEQUENCE
+
+SEQUENCE moveUp USING  elevator
+   SET elevator status TO moving
+   SET elevator direction TO up
+  
+   GET firstElement of elevatorQueue '[7,8,9,10]
+   
+   WHILE elevator current floor < firstElement
+       // HERE Move the elevator up mecanicly by 1 floor 
+       INCREMENT elevator current floor by 1
+
+       IF firstElement IS EQUAL currentFloor THEN
+          // HERE stop the elevator mecanicly 
+          SET elevator status TO STOPPED
+          CALL open_Door() WITH Elevator
+          Revome the first element of elevatorQueue
+       END IF
+    END WHILE
+
+      IF elevatorQueue is EMPTY THEN
+         SET status TO IDLE
+      END IF
+ENDSEQUENCE
+
+SEQUENCE moveDown USING elevator
+   SET elevator status TO moving
+   SET elevator direction TO Down
+
+   GET firstElement of elevatorQueue '[10,9,8,7]
+   
+   WHILE elevator current floor > firstElement
+       // HERE Move the elevator down mecanicly by 1 floor   
+       DECREMENT elevator current floor by 1
+
+      IF firstElement IS EQUAL currentFloor THEN
+          // HERE stop the elevator mecanicly 
+          SET elevator status TO STOPPED
+          CALL open_Door() WITH Elevator
+          Revome the first element of elevatorQueue
+       END IF
+   END WHILE
+     
+      IF elevatorQueue is EMPTY THEN
+         SET status TO IDLE
+      END IF
+ENDSEQUENCE
+
+
+'--------------------------------  BUTTONS  --------------------------------------'
+SEQUENCE Extern_Button USING Request Direction  AND  Request Floor
+   'STEP 1 . FIND
+   CALL Find_Best_Elevator()   WITH  Request Direction  AND  Request Floor RETURNING elevator
+   
+   'STEP 2 . Do with the elevator
+   CALL Add_To_elevatorQueue()  WITH  elevator   AND  Request Floor
+   CALL move_Elevator() WITH  elevator
+ENDSEQUENCE
+
+SEQUENCE Inner_Button USING elevator AND Inner_Request_Floor  
+   Call Add_To_elevatorQueue()  WITH  elevator  AND  Inner_Request_Floor
+   CALL CloseDoor() WITH  elevator
+   CALL move_Elevator() WITH  elevator
+ENDSEQUENCE
+
+
+'--------------------------------  FIND  ----------------------------------------'
+SEQUENCE Find_Best_Elevator USING  Request Direction  AND  Request Floor
+   
+   'STEP 1 . // SET DEFAULT
+   FOR EACH  elevator  in  elevators   
+            elevator GoodWay IS FALSE 
+   END FOR
+   
+   'STEP 2 . Give the property GoodDirection
+   FOR EACH  elevator  in  elevators 
+
+            IF  elevator Status  IS  IDLE  THEN      
+               RETURN elevator
+            ELSE IF  elevator Direction  IS  UP  AND  Request Direction  IS  UP  AND   Request Floor   >  elevator currentFloor THEN            
+               elevator GoodWay IS TRUE            
+            ELSE  elevator Direction  IS  DOWN  AND  Request Direction  IS  DOWN  AND  Request Floor   <  elevator currentFloor THEN    
+               elevator GoodWay IS TRUE        
+            END IF
+   END FOR
+
+   'STEP 3 . CALCULATE GAPS
+   new_GAP = 0  
+   elevator_ID = 0 
+   FOR EACH  elevator  in  elevators  
+                  
+            IF elevator GoodWay IS TRUE THEN  
+               Gap IS CALCULATE elevator CurrentFloor - Request Floor 
+
+               IF Gap IS NOT 0 THEN 
+                  CALCULATE new_GAP = Gap - new_GAP
+                  CALCULATE ABSOLUTE new_GAP
+                  
+                  IF Gap < new_GAP Then
+                      elevator_ID = elevator ID 
+                  END IF    
+              
+            END IF    
+   END FOR
+
+   'STEP 4 . THE BEST ELEVATOR !!!!!!!!
+   FOR EACH  elevator  in  elevators            
+            IF  elevator_ID = elevator ID  THEN
+            RETURN elevator
+            END IF  
+   END FOR
+
+   'STEP 5 . SET DEFAULT IN CASE
+   FOR EACH  elevator  in  elevators            
+             RETURN elevator
+   END FOR
+   
+ENDSEQUENCE
+
+
+'--------------------------------  DOORS  ----------------------------------------'
+SEQUENCE Close_Door USING elevator
+    // HERE give the signal to close and check if door is close by sensor 
+    Set door_Opened IS FALSE
+ENDSEQUENCE
+
+SEQUENCE Open_Door USING elevator
+    che
+    Set door_Opened IS TRUE
+ENDSEQUENCE 
+
