@@ -1,0 +1,81 @@
+///////////////////////////////////////////////
+///            SENARIO #1                   ///
+///////////////////////////////////////////////
+/////////////// Ascenseur 1 est Idle à l’étage 2
+/////////////// Ascenseur 2 est Idle à l’étage 6
+/////////////// utilisateur l'étage [3] veut monter  [UP]   au [7]. L’ascenseur 2 devrait être choisi.
+
+ function SENARIO_1(){
+	console.log("-----------------  SENARIO 1 -----------------------------")
+	column1 = new Column(10, 2)
+
+	column1.elevatorList[0].currentFloor = 2
+	column1.elevatorList[0].direction  =  "" 	  		   
+	column1.elevatorList[0].status =  "IDLE" 
+	column1.elevatorList[0].queue = []
+
+	column1.elevatorList[1].currentFloor = 6
+	column1.elevatorList[1].direction  =  ""  	  		   
+	column1.elevatorList[1].status =  "IDLE"
+	column1.elevatorList[1].queue = []
+
+	column1.requestElevator(3, "UP")
+	//column1.requestFloor(column1.elevatorList[1], 7)
+ }
+//SENARIO_1()
+
+
+
+///////////////////////////////////////////////
+///            SENARIO #2                   ///
+///////////////////////////////////////////////
+/////////////// Ascenseur 1 est Idle à l’Étage 10
+/////////////// Ascenseur 2 est Idle à l’étage 3
+/////////////// utilisateur l'étage [1] veut monter  [UP]   au [6]. L’ascenseur 2 devrait être choisi.
+/////////////// utilisateur l’étage [3] veut monter  [UP]   au [5]. L’ascenseur 2 devrait être choisi.
+/////////////// utilisateur l’étage [9] veut descen  [DOWN] au [2]. L’ascenseur 1 devrait être choisi.
+
+ function SENARIO_2(){
+	console.log("-----------------  SENARIO 2 ----------------------------")
+	column1 = new Column(10, 2)
+
+	column1.elevatorList[0].currentFloor = 10
+	column1.elevatorList[0].direction  =  "" 	  		   
+	column1.elevatorList[0].status =  "IDLE" 
+	column1.elevatorList[0].queue = []
+
+	column1.elevatorList[1].currentFloor = 3
+	column1.elevatorList[1].direction  =  ""  	  		   
+	column1.elevatorList[1].status =  "IDLE"
+	column1.elevatorList[1].queue = []
+
+	column1.requestElevator(1, "UP")
+	//column1.requestFloor(column1.elevatorList[1], 6)
+ }
+//SENARIO_2()
+
+///////////////////////////////////////////////
+///            SENARIO #3                   ///
+///////////////////////////////////////////////
+/////////////// Ascenseur 1 est Idle à l’étage 10
+/////////////// Ascenseur 2 est Moving à l’étage 3 et se dirige vers le 6e étage.
+/////////////// utilisateur l'étage [3]  veut descen  [DOWN] au [2]. L’ascenseur 1 devrait être choisi.
+
+ function SENARIO_3(){
+	console.log("-----------------  SENARIO 3 --------------------------")	 
+	column1 = new Column(10, 2)
+
+	column1.elevatorList[0].currentFloor = 10
+	column1.elevatorList[0].direction  =  "" 	  		   
+	column1.elevatorList[0].status =  "IDLE" 
+	column1.elevatorList[0].queue = []
+
+	column1.elevatorList[1].currentFloor = 3
+	column1.elevatorList[1].direction  =  "UP"  	  		   
+	column1.elevatorList[1].status =  "MOVING"
+	column1.elevatorList[1].queue = [6]
+
+	column1.requestElevator(3, "DOWN")
+	column1.requestFloor(column1.elevatorList[0], 2)
+ }
+//SENARIO_3()

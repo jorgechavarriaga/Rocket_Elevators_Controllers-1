@@ -1,0 +1,22 @@
+print("( ---------------------------------------- TEST Classes ------------------------------------------------------------ )")
+
+print("CREATION COLONNE")
+column1 = Column(10, 2)
+print("COLONNE NUMBER OF FLOOR = " + str(column1.numberOfFloor))
+print("COLONNE NUMBER OF ELEVATOR = " + str(column1.numberOfElevator))
+
+print("( --- TRY : Access elevatorList[0].id --- )")
+print(column1.elevatorList[0].id)
+print(column1.elevatorList[1].id)
+
+print("( --- TRY : Set direction elevator --- )")
+column1.elevatorList[0].direction = "UP"
+print(str(column1.elevatorList[0].direction))
+
+print("( --- EXTERNAL BUTTON --- )")
+for button in column1.externalButtonList:
+	 print(str(button.requestFloor) + "  direction : " + str(button.direction))
+
+print("( --- INTERNAL BUTTONS --- )")
+for button in column1.elevatorList[0].internalButtonList:
+	 print(str(button.floor) + "  buttonActivated : " + str(button.buttonActivated))

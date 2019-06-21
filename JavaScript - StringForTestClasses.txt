@@ -1,0 +1,25 @@
+// console.log("( ---------------------------------------- TEST Classes ------------------------------------------------------------");
+
+// console.log("CREATION COLONNE");
+// column1 = new Column(10, 2);
+// console.log("COLONNE NUMBER OF FLOOR = ", column1.numberOfFloor);
+// console.log("COLONNE NUMBER OF ELEVATOR = ", column1.numberOfElevator);
+
+// console.log("( --- TRY  { Access elevatorList[0].id --- )")
+// console.log(column1.elevatorList[0].id)
+// console.log(column1.elevatorList[1].id)
+
+// console.log("( --- TRY  { Set direction elevator --- )")
+// column1.elevatorList[0].direction = "UP"
+// console.log(column1.elevatorList[0].direction)
+
+// console.log("( --- EXTERNAL BUTTON --- )")
+// for (let i = 0; i < column1.externalButtonList.length; i++) {
+// 	console.log(column1.externalButtonList[i].requestFloor + "  direction   " + column1.externalButtonList[i].direction);
+// }
+
+// console.log("( --- INTERNAL BUTTONS --- )")
+// for (let i = 0; i < column1.elevatorList[0].internalButtonList.length; i++) {
+// 	console.log(column1.elevatorList[0].internalButtonList[i].floor, "  buttonActivated   ", column1.elevatorList[0].internalButtonList[i].buttonActivated);
+// }
+
