@@ -52,11 +52,9 @@ class Column():
 					Gap = elevator.currentFloor - requestedFloor
 					Gap = abs(Gap) # Exemple : (-4) become (4)
 					if Gap < bestGAP:
-						#print("IDLE and Best gap is : " , Gap)  
 						elevatorIdWithBestGap = elevator.id
-						bestGAP = Gap
+						bestGAP = Gap 
 			
-			#print("Return : THE NEAREST ELEVATOR with the IDLE status is : [", elevator.id ,"]")  
 			return self.findElevatorById(elevatorIdWithBestGap)
 
 		# 3 - THE NEAREST ELEVATOR that's is coming toward me 
@@ -67,10 +65,9 @@ class Column():
 					Gap = elevator.currentFloor - requestedFloor
 					Gap = abs(Gap) # Exemple : (-4) become (4)
 					if Gap < bestGAP:
-						#print("INSAMEDIRECTION and Best gap is : " , Gap)  
 						elevatorIdWithBestGap = elevator.id
 						bestGAP = Gap
-			#print("Return : THE NEAREST ELEVATOR that's is coming toward me is : [", elevator.id ,"]")  
+
 			return self.findElevatorById(elevatorIdWithBestGap)	
 
 	def requestElevator(self, requestedFloor, direction): 

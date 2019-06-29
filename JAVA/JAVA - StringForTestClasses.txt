@@ -1,0 +1,29 @@
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		//////////////////////////////////////   TEST CLASSES   /////////////////////////////////////////////////////
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//		System.out.println("startFloorList : " + startFloorList.get(2));		
+//		System.out.println("battery.columnList.get(2).id : " + battery.columnList.get(2).id);
+//		System.out.println("battery.columnList.get(1).startFloor : " + battery.columnList.get(1).startFloor);
+//		System.out.println("battery.columnList.get(2).startFloor : " + battery.columnList.get(2).startFloor);
+//		System.out.println("battery.columnList.get(3).startFloor : " + battery.columnList.get(3).startFloor);
+//		System.out.println("battery.columnList.get(1).elevatorList.get(4).id " + battery.columnList.get(1).elevatorList.get(4).id);
+//		
+//		 System.out.println("( --- INTERNAL BUTTON --- )");
+//		 for (int col = 0 ; col < battery.columnList.size(); col++)
+//		 {
+//		 	for (int i = 0; i < battery.columnList.get(col).elevatorList.get(0).internalButtonList.size(); i++)
+//		 	{
+//		 	System.out.println("battery.columnList[ " + col + " ].elevatorList.get(4).internalButtonList[ " + i + " ].floor : " + battery.columnList.get(col).elevatorList.get(4).internalButtonList.get(i).floor);
+//		 	}
+//		 }
+//
+//		
+//		 System.out.println("( --- EXTERNAL BUTTON --- )");
+//		 for (int col = 0 ; col < battery.columnList.size(); col++)
+//		 {
+//		 	for (int i = 0; i < battery.columnList.get(col).externalButtonList.size(); i++)
+//		 	{
+//		 	System.out.println( "Column.id : " + battery.columnList.get(col).id + "   Button : " + battery.columnList.get(col).externalButtonList.get(i).floor + "  direction   " + battery.columnList.get(col).externalButtonList.get(i).direction);
+//		 	}	
+//		 }

@@ -93,6 +93,7 @@ class Column {
 
 		elevator.addToQueue(requestedFloor);
 		elevator.moveElevator();
+		return elevator;
 	}
 
 	requestFloor(elevator, requestedFloor) {
